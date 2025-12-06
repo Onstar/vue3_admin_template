@@ -1,6 +1,4 @@
-pnpm run format
-pnpm run lint:style
-
+pnpm exec lint-staged
 
 git add -u
 echo "✅ 格式化完成，变更已暂存"
