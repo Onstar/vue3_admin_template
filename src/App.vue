@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 const a = () => {
-    console.log('aaa')
+    console.log('aaaa')
 }
 </script>
 <style lang="scss" scoped>
