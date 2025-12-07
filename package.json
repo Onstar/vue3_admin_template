@@ -13,7 +13,8 @@
         "lint:eslint": "eslint src/**/*.{ts,vue} --cache --fix",
         "lint:style": "stylelint src/**/*.{css,scss,vue} --fix",
         "prepare": "husky",
-        "commitlint": "commitlint --edit"
+        "commitlint": "commitlint --edit",
+        "preinstall": "node ./scripts/preinstall.js"
     },
     "lint-staged": {
         "*.{html,vue,ts,js,json,md}": [
