@@ -1,0 +1,165 @@
+* {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+}
+
+body {
+    margin: 0;
+    line-height: 1;
+}
+
+article,
+aside,
+footer,
+header,
+nav,
+section,
+main,
+figcaption,
+figure,
+menu,
+details {
+    display: block;
+}
+
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+
+img {
+    display: block;
+    border: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+    font-style: normal;
+}
+
+ul,
+ol {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+a {
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+
+    &:active,
+    &:hover {
+        outline: 0;
+    }
+}
+
+:focus {
+    outline: 0;
+}
+
+button,
+input,
+select,
+textarea {
+    margin: 0;
+    font-size: inherit;
+}
+
+button,
+html [type='button'],
+[type='reset'],
+[type='submit'] {
+    padding: 0;
+    color: inherit;
+    -webkit-appearance: button;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+input {
+    padding: 0;
+    line-height: normal;
+
+    //// 修复核心：补全标准 ::placeholder，调整私有前缀顺序，避免 stylelint 误判
+    // &::placeholder {
+    //    font-weight: 300;
+    // }
+    // &::-webkit-input-placeholder {
+    //    font-weight: 300;
+    // }
+    // &:-ms-input-placeholder {
+    //    // 注意：IE 的占位符是单冒号（伪类），不是双冒号
+    //    font-weight: 300;
+    // }
+    // &::-moz-placeholder {
+    //    font-weight: 300;
+    //    opacity: 1; // 火狐默认会降低占位符透明度，强制重置
+    // }
+}
+
+[type='number'] {
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        height: auto;
+        margin: 0;
+        -webkit-appearance: none;
+    }
+}
+
+[type='search'] {
+    -webkit-appearance: textfield;
+
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+}
+
+textarea {
+    overflow: auto;
+    -webkit-appearance: none;
+    resize: none;
+}
+
+select {
+    -webkit-appearance: none;
+    background-color: #fff;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
