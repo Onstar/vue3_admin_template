@@ -1,20 +1,25 @@
 // axios 二次封装
-import axios from 'axios'
+import axios, {
+    type AxiosInstance,
+    type InternalAxiosRequestConfig,
+    type AxiosResponse,
+} from 'axios'
+
 import { ElMessage } from 'element-plus'
 
-let request = axios.create({
+let request: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API,
     timeout: 5000,
 })
 
 // 请求拦截
-request.interceptors.request.use((config) => {
+request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     // config.headers.token = '123'
     return config
 })
 
 request.interceptors.response.use(
-    (response) => {
+    (response: AxiosResponse) => {
         return response.data
     },
     (error) => {
