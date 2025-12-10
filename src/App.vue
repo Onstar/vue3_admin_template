@@ -5,14 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
-axios({
-    method: 'post',
-    url: '/api/user/login',
-    data: {
-        username: 'admin',
-        password: '111111',
-    },
+import request from '@/utils/request.ts'
+import { onMounted } from 'vue'
+onMounted(() => {
+    request({
+        method: 'post',
+        url: '/user/login',
+        data: {
+            username: 'admin',
+            password: '111111',
+        },
+    }).then((res) => {
+        console.log(res)
+    })
 })
 </script>
 <style lang="scss" scoped>

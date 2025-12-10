@@ -9,8 +9,9 @@
             //路径映射，相对于baseUrl
             "@/*": ["src/*"]
         },
-        /* 必须添加这一条，否则解析不到 .d.mts */
+
         "moduleResolution": "bundler",
+        "module": "ESNext",
 
         /* Linting */
         "strict": true,
