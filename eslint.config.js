@@ -19,6 +19,10 @@ export default defineConfig([
     {
         files: ['**/*.vue'],
         languageOptions: { parserOptions: { parser: tseslint.parser } },
+        rules: {
+            // 关闭规则：值为 'off' / 0；放宽规则：值为 'warn' / 1（仅警告，不报错）
+            'vue/multi-word-component-names': 'off',
+        },
     },
     // ⭐⭐⭐ Prettier（必须放在最后）
     eslintPluginPrettierRecommended,
