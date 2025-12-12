@@ -22,6 +22,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button
+                            :loading="submitBtnLoading"
                             class="login_btn"
                             type="primary"
                             size="default"
@@ -38,18 +39,43 @@
 
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
-import { reqLogin } from '@/api/user'
+import { reactive, ref } from 'vue'
+import { ElNotification } from 'element-plus'
+// 引入用户相关的仓库
+import useUserStore from '@/store/modules/user.ts'
+const userStore = useUserStore()
+// 获取路由器
+import { useRouter } from 'vue-router'
+const router = useRouter()
+// 引入获取当前时间 name
+import { getTimeName } from '@/utils/time.ts'
 
+const submitBtnLoading = ref<boolean>(false)
 let loginForm = reactive({
     username: 'admin',
     password: '111111',
 })
 // 登录
 function loginHandle() {
-    reqLogin(loginForm).then((res) => {
-        console.log(res)
-    })
+    submitBtnLoading.value = true
+    userStore
+        .userLogin(loginForm)
+        .then(() => {
+            submitBtnLoading.value = false
+            router.push('/')
+            ElNotification({
+                type: 'success',
+                title: `HI, ${getTimeName()}好!`,
+                message: '欢迎回来!',
+            })
+        })
+        .catch((err) => {
+            submitBtnLoading.value = false
+            ElNotification({
+                type: 'error',
+                message: err.message,
+            })
+        })
 }
 </script>
 
