@@ -3,16 +3,21 @@
         <el-row>
             <el-col :span="12" :xs="0"></el-col>
             <el-col :span="12" :xs="24">
-                <el-form class="login_form">
+                <el-form
+                    class="login_form"
+                    :model="loginForm"
+                    :rules="rules"
+                    ref="loginForms"
+                >
                     <h1>hello</h1>
                     <h2>欢迎来到硅谷</h2>
-                    <el-form-item>
+                    <el-form-item prop="username">
                         <el-input
                             v-model="loginForm.username"
                             :prefix-icon="User"
                         ></el-input>
                     </el-form-item>
-                    <el-form-item>
+                    <el-form-item prop="password">
                         <el-input
                             v-model="loginForm.password"
                             type="password"
@@ -55,8 +60,47 @@ let loginForm = reactive({
     username: 'admin',
     password: '111111',
 })
+import type { FormRules } from 'element-plus'
+interface RuleForm {
+    username: string
+    password: string
+}
+// 校验规则
+const validatorUsername = (
+    _rule: unknown, // _开始
+    value: string,
+    callback: (error?: string | Error) => void,
+) => {
+    if (value.length >= 5) {
+        callback()
+    } else {
+        callback(new Error('帐号长度至少5位'))
+    }
+}
+const rules = reactive<FormRules<RuleForm>>({
+    username: [
+        // {
+        //     required: true,
+        //     min: 5,
+        //     max: 10,
+        //     message: '用户名才度不能小于5位',
+        //     trigger: 'change',
+        // },
+        { trigger: 'change', validator: validatorUsername },
+    ],
+    password: [
+        {
+            required: true,
+            min: 6,
+            message: '密码才度至少6位',
+            trigger: 'change',
+        },
+    ],
+})
+const loginForms = ref()
 // 登录
-function loginHandle() {
+async function loginHandle() {
+    await loginForms.value.validate()
     submitBtnLoading.value = true
     userStore
         .userLogin(loginForm)

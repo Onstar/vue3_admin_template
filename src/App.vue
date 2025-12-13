@@ -3,8 +3,4 @@
 </template>
 
 <script setup lang="ts"></script>
-<style lang="scss" scoped>
-.title {
-    color: $color;
-}
-</style>
+<style lang="scss" scoped></style>

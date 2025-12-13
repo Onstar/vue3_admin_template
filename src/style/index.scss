@@ -1,1 +1,15 @@
 @use './reset';
+
+// 滚动条样式
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: $base-menu-backgournd;
+}
+
+::-webkit-scrollbar-thumb {
+    // width: 1px;
+    background-color: yellowgreen;
+}

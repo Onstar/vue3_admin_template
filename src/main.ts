@@ -10,7 +10,7 @@ import 'virtual:svg-icons-register'
 // 引入自定义插件：注册全局组件
 import globalComponent from '@/components'
 // 引入路由
-import router from '@/views/router'
+import router from '@/router'
 // 引入 仓库
 import pinia from '@/store/index.ts'
 
