@@ -94,7 +94,8 @@ html [type='button'],
 [type='reset'],
 [type='submit'] {
     padding: 0;
-    color: inherit;
+
+    // color: inherit;
     -webkit-appearance: button;
     cursor: pointer;
 

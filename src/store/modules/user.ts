@@ -7,11 +7,14 @@ import type { loginForm, loginResponse } from '@/api/user/type.ts'
 import type { UserState } from '@/store/modules/types/type.ts'
 // 引入操作本地存储的方法
 import { SET_TOKEN, GET_TOKEN } from '@/utils/token.ts'
+// 引入常量路由
+import { constantRoute } from '@/router/routes.ts'
 
 const useUserStore = defineStore('user', {
     state: (): UserState => {
         return {
             token: GET_TOKEN(),
+            menuRoutes: constantRoute,
         }
     },
     // 异步｜逻辑
