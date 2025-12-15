@@ -1,6 +1,16 @@
 <template>
-    <el-button size="small" icon="refresh" circle></el-button>
-    <el-button size="small" icon="FullScreen" circle></el-button>
+    <el-button
+        size="small"
+        icon="refresh"
+        circle
+        @click="updateRefresh"
+    ></el-button>
+    <el-button
+        size="small"
+        icon="FullScreen"
+        circle
+        @click="fullScreenHandle"
+    ></el-button>
     <el-button size="small" icon="Setting" circle></el-button>
     <img
         src="../../../public/logo.png"
@@ -26,6 +36,21 @@
 defineOptions({
     name: 'SettingIndex',
 })
+import useLayoutSettingStore from '@/store/modules/setting.ts'
+const layoutSettingStore = useLayoutSettingStore()
+// 刷新
+function updateRefresh() {
+    layoutSettingStore.refresh = !layoutSettingStore.refresh
+}
+// 全屏
+function fullScreenHandle() {
+    const isFull = document.fullscreenElement
+    if (!isFull) {
+        document.documentElement.requestFullscreen()
+    } else {
+        document.exitFullscreen()
+    }
+}
 </script>
 
 <style scoped></style>

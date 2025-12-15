@@ -1,8 +1,9 @@
 <template>
     <div class="tabbar">
         <div class="tabbar_left">
-            <el-icon>
-                <Fold />
+            <el-icon class="toggle-icon" @click="toggleHandle">
+                <Expand v-if="settingStore.fold" />
+                <Fold v-else />
             </el-icon>
             <BreadcrumbIndex />
         </div>
@@ -13,12 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import BreadcrumbIndex from '@/layout/tabbar/breadcrumb/index.vue'
-import SettingIndex from '@/layout/tabbar/setting/index.vue'
-
 defineOptions({
     name: 'TabBarIndex',
 })
+import BreadcrumbIndex from '@/layout/tabbar/breadcrumb/index.vue'
+import SettingIndex from '@/layout/tabbar/setting/index.vue'
+import useLayoutSettingStore from '@/store/modules/setting.ts'
+const settingStore = useLayoutSettingStore()
+function toggleHandle() {
+    settingStore.fold = !settingStore.fold
+}
 </script>
 
 <style scoped>
@@ -34,10 +39,15 @@ defineOptions({
         rgb(197 165 165)
     );
 
+    .toggle-icon {
+        cursor: pointer;
+    }
+
     .tabbar_left {
         display: flex;
         align-items: center;
         margin-left: 20px;
+        user-select: none;
 
         & > .el-icon {
             margin-right: 10px;

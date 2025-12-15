@@ -18,8 +18,9 @@ defineOptions({
     align-items: center;
     width: 100%;
     height: $base-menu-logo-height;
-    padding: 20px;
+    padding: 10px;
     color: #fff;
+    white-space: nowrap;
 
     img {
         width: 40px;

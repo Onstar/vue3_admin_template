@@ -1,6 +1,6 @@
 <template>
     <div class="layout_container">
-        <div class="layout_sidebar">
+        <div class="layout_sidebar" :class="{ fold: settingStore.fold }">
             <LogoIndex />
             <!-- 菜单 -->
             <el-scrollbar class="scrollbar">
@@ -8,15 +8,16 @@
                     background-color="#001529"
                     text-color="white"
                     :default-active="defaultActiveKey"
+                    :collapse="settingStore.fold"
                 >
                     <MenuIndex :menu-list="userStore.menuRoutes" />
                 </el-menu>
             </el-scrollbar>
         </div>
-        <div class="layout_tabbar">
+        <div class="layout_tabbar" :class="{ fold: settingStore.fold }">
             <TabBarIndex />
         </div>
-        <div class="layout_main">
+        <div class="layout_main" :class="{ fold: settingStore.fold }">
             <MainIndex />
         </div>
     </div>
@@ -30,10 +31,11 @@ import MenuIndex from '@/layout/menu/index.vue'
 import MainIndex from '@/layout/main/index.vue'
 import TabBarIndex from '@/layout/tabbar/index.vue'
 import useUserStore from '@/store/modules/user.ts'
+import useLayoutSettingStore from '@/store/modules/setting.ts'
 const userStore = useUserStore()
-
 const route = useRoute()
 const defaultActiveKey = ref(route.path)
+const settingStore = useLayoutSettingStore()
 </script>
 
 <style lang="scss" scoped>
@@ -46,6 +48,7 @@ const defaultActiveKey = ref(route.path)
         height: 100vh;
         color: white;
         background-color: $base-menu-backgournd;
+        transition: all 0.3s;
 
         .scrollbar {
             width: 100%;
@@ -55,6 +58,10 @@ const defaultActiveKey = ref(route.path)
                 border: none;
             }
         }
+
+        &.fold {
+            width: 60px;
+        }
     }
 
     .layout_tabbar {
@@ -63,6 +70,12 @@ const defaultActiveKey = ref(route.path)
         left: $base-menu-width;
         width: calc(100% - $base-menu-width);
         height: $base-tabbar-height;
+        transition: all 0.3s;
+
+        &.fold {
+            left: 60px;
+            width: calc(100% - 60px);
+        }
     }
 
     .layout_main {
@@ -73,6 +86,12 @@ const defaultActiveKey = ref(route.path)
         height: calc(100% - $base-tabbar-height);
         padding: 20px;
         overflow: auto;
+        transition: all 0.3s;
+
+        &.fold {
+            left: 60px;
+            width: calc(100% - 60px);
+        }
     }
 }
 </style>
