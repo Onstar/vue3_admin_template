@@ -4,4 +4,6 @@ import type { MenuList } from '@/router/types/type.ts'
 export interface UserState {
     token: string
     menuRoutes: MenuList
+    username: string
+    avatar: string
 }

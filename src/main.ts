@@ -11,6 +11,7 @@ import 'virtual:svg-icons-register'
 import globalComponent from '@/components'
 // 引入路由
 import router from '@/router'
+import './permissition.ts'
 // 引入 仓库
 import pinia from '@/store/index.ts'
 
@@ -19,9 +20,9 @@ const app = createApp(App)
 app.use(ElementPlus, {
     locale: zhCn,
 })
-app.use(globalComponent)
 app.use(router)
 app.use(pinia)
+app.use(globalComponent)
 
 // 引入全局样式
 import '@/style/index.scss'

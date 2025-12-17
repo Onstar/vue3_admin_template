@@ -1,20 +1,25 @@
 // axios 二次封装
 import axios, {
-    type AxiosInstance,
+    // type AxiosInstance,
     type InternalAxiosRequestConfig,
     type AxiosResponse,
 } from 'axios'
 
 import { ElMessage } from 'element-plus'
+import useUserStore from '@/store/modules/user.ts'
 
-let request: AxiosInstance = axios.create({
+const request = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API,
     timeout: 5000,
 })
 
 // 请求拦截
 request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    // config.headers.token = '123'
+    const userStore = useUserStore()
+    const token = userStore.token
+    if (token) {
+        config.headers.token = token
+    }
     return config
 })
 
@@ -24,7 +29,7 @@ request.interceptors.response.use(
     },
     (error) => {
         let message = ''
-        let status = error.response.status
+        const status = error.response.status
         switch (status) {
             case 401:
                 message = 'token 过期'

@@ -26,12 +26,17 @@ function createUserList() {
     ]
 }
 
+interface MockRequest {
+    headers: {
+        token?: string
+    }
+}
 export default [
     // 用户登录接口
     {
         url: '/api/user/login', //请求地址
         method: 'post', //请求方式
-        response: ({ body }) => {
+        response: ({ body }: { body: Record<string, unknown> }) => {
             //获取请求体携带过来的用户名与密码
             const { username, password } = body
             //调用获取用户信息函数,用于判断是否有此用户
@@ -52,7 +57,7 @@ export default [
     {
         url: '/api/user/info',
         method: 'get',
-        response: (request) => {
+        response: (request: MockRequest) => {
             //获取请求头携带token
             const token = request.headers.token
             //查看用户信息是否包含有次token用户

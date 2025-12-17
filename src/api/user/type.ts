@@ -30,5 +30,5 @@ interface userData {
 }
 export interface userResponseData {
     code: number
-    data: userData[]
+    data: userData
 }

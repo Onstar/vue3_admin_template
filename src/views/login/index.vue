@@ -50,8 +50,9 @@ import { ElNotification } from 'element-plus'
 import useUserStore from '@/store/modules/user.ts'
 const userStore = useUserStore()
 // 获取路由器
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
 // 引入获取当前时间 name
 import { getTimeName } from '@/utils/time.ts'
 
@@ -106,12 +107,21 @@ async function loginHandle() {
         .userLogin(loginForm)
         .then(() => {
             submitBtnLoading.value = false
-            router.push('/')
+            const redirectPath =
+                typeof route.query.redirect === 'string'
+                    ? route.query.redirect
+                    : ''
+            router.push({
+                path: redirectPath || '/',
+            })
             ElNotification({
                 type: 'success',
                 title: `HI, ${getTimeName()}好!`,
                 message: '欢迎回来!',
             })
+            // 获取用户数据
+            //
+            userStore.userInfo()
         })
         .catch((err) => {
             submitBtnLoading.value = false

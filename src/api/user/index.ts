@@ -9,8 +9,8 @@ const API = {
 
 // 登录接口
 export const reqLogin = (data: loginForm) => {
-    return request.post<any, loginResponse>(API.LOGIN_URL, data)
+    return request.post<unknown, loginResponse>(API.LOGIN_URL, data)
 }
 // 获取用户信息
 export const reqUserInfo = () =>
-    request.get<any, userResponseData>(API.USERINFO_URL)
+    request.get<unknown, userResponseData>(API.USERINFO_URL)

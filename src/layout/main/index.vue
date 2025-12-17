@@ -13,7 +13,7 @@ defineOptions({
 import { ref, watch, nextTick } from 'vue'
 import useLayoutSettingStore from '@/store/modules/setting.ts'
 const layoutSettingStore = useLayoutSettingStore()
-const flag = ref(false)
+const flag = ref(true)
 watch(
     () => layoutSettingStore.refresh,
     () => {

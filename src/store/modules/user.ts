@@ -1,20 +1,23 @@
 // 创建用户相关的数据
 import { defineStore } from 'pinia'
 // 引入接口
-import { reqLogin } from '@/api/user'
+import { reqLogin, reqUserInfo } from '@/api/user'
 // 引入数据类型
 import type { loginForm, loginResponse } from '@/api/user/type.ts'
 import type { UserState } from '@/store/modules/types/type.ts'
 // 引入操作本地存储的方法
-import { SET_TOKEN, GET_TOKEN } from '@/utils/token.ts'
+import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token.ts'
 // 引入常量路由
 import { constantRoute } from '@/router/routes.ts'
 
 const useUserStore = defineStore('user', {
     state: (): UserState => {
+        console.log('state() 执行了')
         return {
             token: GET_TOKEN(),
             menuRoutes: constantRoute,
+            username: '',
+            avatar: '',
         }
     },
     // 异步｜逻辑
@@ -30,6 +33,20 @@ const useUserStore = defineStore('user', {
             } else {
                 return Promise.reject(new Error(result.data.message))
             }
+        },
+        async userInfo() {
+            const result = await reqUserInfo()
+            if (result.code === 200) {
+                const { username, avatar } = result.data.checkUser
+                this.username = username
+                this.avatar = avatar
+            }
+        },
+        userLogout() {
+            REMOVE_TOKEN()
+            this.username = ''
+            this.avatar = ''
+            this.token = ''
         },
     },
     getters: {},
