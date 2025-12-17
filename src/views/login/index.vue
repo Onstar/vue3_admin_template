@@ -119,9 +119,6 @@ async function loginHandle() {
                 title: `HI, ${getTimeName()}好!`,
                 message: '欢迎回来!',
             })
-            // 获取用户数据
-            //
-            userStore.userInfo()
         })
         .catch((err) => {
             submitBtnLoading.value = false

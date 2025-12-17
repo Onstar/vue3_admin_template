@@ -40,6 +40,9 @@ const useUserStore = defineStore('user', {
                 const { username, avatar } = result.data.checkUser
                 this.username = username
                 this.avatar = avatar
+                return 'ok'
+            } else {
+                return Promise.reject('获取信息失败')
             }
         },
         userLogout() {
