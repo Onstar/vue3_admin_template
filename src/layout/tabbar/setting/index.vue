@@ -57,10 +57,9 @@ function fullScreenHandle() {
     }
 }
 // 退出
-function logout() {
+async function logout() {
     // 请求退出接口( 清除 Token)
-    userStore.userLogout()
-    debugger
+    await userStore.userLogout()
     nextTick(() => {
         router.push({
             path: '/login',
