@@ -1,0 +1,81 @@
+<template>
+    <el-card class="mb-16">
+        <el-form :inline="true" class="category-form">
+            <el-form-item label="一级分类">
+                <el-select
+                    v-model="categoryStore.c1Id"
+                    :disabled="props.scene === 1"
+                    @change="firstCategoryChange"
+                >
+                    <el-option
+                        v-for="c1 in categoryStore.c1Arr"
+                        :key="c1.id"
+                        :label="c1.name"
+                        :value="c1.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="二级分类">
+                <el-select
+                    v-model="categoryStore.c2Id"
+                    :disabled="props.scene === 1"
+                    @change="secondCategoryChange"
+                >
+                    <el-option
+                        v-for="c2 in categoryStore.c2Arr"
+                        :key="c2.id"
+                        :label="c2.name"
+                        :value="c2.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="三级分类">
+                <el-select
+                    v-model="categoryStore.c3Id"
+                    :disabled="props.scene === 1"
+                >
+                    <el-option
+                        v-for="c3 in categoryStore.c3Arr"
+                        :key="c3.id"
+                        :label="c3.name"
+                        :value="c3.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+    </el-card>
+</template>
+
+<script setup lang="ts">
+defineOptions({
+    name: 'CategorySelect',
+})
+import { onMounted } from 'vue'
+import useCategoryStore from '@/store/modules/category.ts'
+const props = defineProps<{ scene: number }>()
+
+const categoryStore = useCategoryStore()
+onMounted(() => {
+    getC1()
+})
+/******************** 一级数据 ********************/
+function getC1() {
+    categoryStore.getC1()
+}
+function firstCategoryChange() {
+    categoryStore.c2Id = ''
+    categoryStore.c3Id = ''
+    categoryStore.c3Arr = []
+    categoryStore.getC2()
+}
+function secondCategoryChange() {
+    categoryStore.c3Id = ''
+    categoryStore.getC3()
+}
+</script>
+
+<style scoped>
+.category-form .el-select {
+    --el-select-width: 220px;
+}
+</style>
