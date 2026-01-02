@@ -1,5 +1,11 @@
 import request from '@/utils/request.ts'
-import type { idType, CategoryResponseData, AttrResponseData } from './type.ts'
+import type {
+    idType,
+    CategoryResponseData,
+    AttrResponseData,
+    Attr,
+} from './type.ts'
+import type { ResponseData } from '@/api/user/type.ts'
 
 const API = {
     // 一级分类
@@ -10,6 +16,9 @@ const API = {
     C3_URL: '/admin/product/getCategory3/',
     // 分类下的数据
     ATTR_URL: '/admin/product/attrInfoList/',
+    // 新增或修改属性
+    ADDORUPDATEATTR_URL: '/admin/product/saveAttrInfo',
+    DELETEATTR_URL: '/admin/product/deleteAttr/',
 } as const
 
 // 一级分类数据
@@ -37,4 +46,15 @@ export const reqAttr = (
     return request.get<AttrResponseData, AttrResponseData>(
         API.ATTR_URL + `${category1Id}/${category2Id}/${category3Id}`,
     )
+}
+
+export const reqAddOrUpdateAttr = (attr: Attr) => {
+    return request.post<ResponseData, ResponseData>(
+        API.ADDORUPDATEATTR_URL,
+        attr,
+    )
+}
+
+export const reqDeleteAttr = (id: number) => {
+    return request.delete<ResponseData, ResponseData>(API.DELETEATTR_URL + id)
 }
