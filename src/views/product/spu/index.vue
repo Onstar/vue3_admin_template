@@ -66,7 +66,11 @@
                     @current-change="handleCurrentChange"
                 />
             </div>
-            <SpuForm v-show="scene === 1" @changeScene="changeSceneHandle" />
+            <SpuForm
+                ref="spuForm"
+                v-show="scene === 1"
+                @changeScene="changeSceneHandle"
+            />
             <SkuForm v-show="scene === 2" />
         </el-card>
     </div>
@@ -78,11 +82,12 @@ defineOptions({
 })
 import { ref, watch } from 'vue'
 import { reqHasSpu } from '@/api/product/spu'
-import type { Records } from '@/api/product/spu/type.ts'
+import type { Records, SpuData } from '@/api/product/spu/type.ts'
 import SpuForm from '@/views/product/spu/SpuForm.vue'
 import SkuForm from '@/views/product/spu/SkuForm.vue'
 
 const scene = ref(0) // 0: 显示已有spu；1:添加/修改spu；2:添加 sku
+const spuForm = ref()
 /******************** 分页 ********************/
 const currentPage = ref(0)
 const pageSize = ref(10)
@@ -118,7 +123,6 @@ const getHasSpu = async (page: number = 1) => {
             const { total, records } = res.data || {}
             tableData.value = records
             totalPages.value = total || 0
-            console.log('kkk', tableData)
         }
     } catch (e) {
         console.log(e)
@@ -127,8 +131,9 @@ const getHasSpu = async (page: number = 1) => {
 function addSpuHandle() {
     scene.value = 1
 }
-function editSpuHandle(row) {
+function editSpuHandle(row: SpuData) {
     scene.value = 1
+    spuForm.value.getAllData(row)
 }
 function changeSceneHandle(v: number) {
     scene.value = v

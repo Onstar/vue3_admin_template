@@ -59,12 +59,26 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import type { SpuData } from '@/api/product/spu/type.ts'
+
 defineOptions({
     name: 'SpuForm',
 })
 defineEmits<{
     (e: 'changeScene', v: number): void
 }>()
+/******************** 接口请求 ********************/
+
+const spuId = ref(0)
+const formData = ref({})
+// 发送获取数据请求
+function getAllData(spuData: SpuData) {
+    formData.value = { ...spuData }
+}
+defineExpose({
+    getAllData,
+})
 </script>
 
 <style scoped></style>
