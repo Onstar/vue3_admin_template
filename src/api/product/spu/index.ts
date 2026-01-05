@@ -1,18 +1,22 @@
 import request from '@/utils/request'
 import type {
+    ResponseData,
     HasSpuResponseData,
     AllTrademark,
     SpuHasImg,
     SaleAttrResponseData,
     HasSaleAttrResponseData,
+    SpuData,
 } from './type.ts'
 
 const API = {
     HASSPU_URL: '/admin/product/',
     ALLTRADEMARK_URL: '/admin/product/baseTrademark/getTrademarkList',
-    IMAGE_URL: '/admin/product/suImageList/',
+    IMAGE_URL: '/admin/product/spuImageList/',
     SPUHASSALEATTR_URL: '/admin/product/spuSaleAttrList/',
     ALLSALEATTR_URL: '/admin/product/baseSaleAttrList',
+    ADDSPU_URL: '/admin/product/saveSpuInfo',
+    UPDATESPU_URL: '/admin/product/updateSpuInfo',
 } as const
 
 export const reqHasSpu = (
@@ -41,4 +45,11 @@ export const reqAllSaleAttr = () => {
     return request.get<HasSaleAttrResponseData, HasSaleAttrResponseData>(
         API.ALLSALEATTR_URL,
     )
+}
+export const reqAddOrUpdateSPU = (data: SpuData) => {
+    if (data.id) {
+        return request.post<ResponseData, ResponseData>(API.UPDATESPU_URL, data)
+    } else {
+        return request.post<ResponseData, ResponseData>(API.ADDSPU_URL, data)
+    }
 }

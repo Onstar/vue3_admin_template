@@ -1,21 +1,32 @@
 <template>
     <el-form label-width="110px">
         <el-form-item label="SPU名称">
-            <el-input placeholder="请输入SPU名称"></el-input>
+            <el-input
+                placeholder="请输入SPU名称"
+                v-model="formData.spuName"
+            ></el-input>
         </el-form-item>
         <el-form-item label="SPU品牌">
-            <el-select>
-                <el-option label="华为"></el-option>
-                <el-option label="华为2"></el-option>
+            <el-select v-model="formData.tmId">
+                <el-option
+                    v-for="item in allTradeMark"
+                    :label="item.tmName"
+                    :key="item.id"
+                    :value="item.id"
+                ></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="SPU描述">
-            <el-input type="textarea" placeholder="请输入SPU描述"></el-input>
+            <el-input
+                v-model="formData.description"
+                type="textarea"
+                placeholder="请输入SPU描述"
+            ></el-input>
         </el-form-item>
         <el-form-item label="SPU图片">
             <el-upload
-                v-model:file-list="fileList"
-                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                v-model:file-list="imgList"
+                action="/api/admin/product/fileUpload"
                 list-type="picture-card"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
@@ -60,7 +71,24 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { SpuData } from '@/api/product/spu/type.ts'
+import type {
+    AllTrademark,
+    HasSaleAttr,
+    HasSaleAttrResponseData,
+    SaleAttr,
+    SaleAttrResponseData,
+    SpuData,
+    SpuHasImg,
+    SpuImage,
+} from '@/api/product/spu/type.ts'
+import {
+    reqAllTrademark,
+    reqSpuImageList,
+    reqSpuHasSaleAttr,
+    reqAllSaleAttr,
+} from '@/api/product/spu'
+import type { TradeMark } from '@/api/product/trademark/type.ts'
+import type { UploadFile } from 'element-plus'
 
 defineOptions({
     name: 'SpuForm',
@@ -70,11 +98,44 @@ defineEmits<{
 }>()
 /******************** 接口请求 ********************/
 
-const spuId = ref(0)
-const formData = ref({})
+const formData = ref<SpuData>({
+    category3Id: '',
+    spuName: '',
+    description: '',
+    tmId: '',
+    spuImageList: [],
+    spuSaleAttrList: [],
+})
+const allTradeMark = ref<TradeMark[]>([])
+const imgList = ref<SpuImage[]>([])
+const saleAttr = ref<SaleAttr[]>([])
+const allSaleAttr = ref<HasSaleAttr[]>([])
 // 发送获取数据请求
-function getAllData(spuData: SpuData) {
-    formData.value = { ...spuData }
+async function getAllData(spuData: SpuData) {
+    formData.value = spuData
+    const res: AllTrademark = await reqAllTrademark()
+    const res2: SpuHasImg = await reqSpuImageList(spuData.id as number)
+    const res3: SaleAttrResponseData = await reqSpuHasSaleAttr(
+        spuData.id as number,
+    )
+    const res4: HasSaleAttrResponseData = await reqAllSaleAttr()
+    allTradeMark.value = res.data
+    imgList.value = res2.data.map((item) => {
+        return {
+            ...item,
+            name: item.imgName,
+            url: item.imgUrl,
+        }
+    })
+    saleAttr.value = res3.data
+    allSaleAttr.value = res4.data
+}
+const dialogVisible = ref(false)
+const dialogImageUrl = ref<string | undefined>('')
+function handleRemove() {}
+function handlePictureCardPreview(file: UploadFile) {
+    dialogVisible.value = true
+    dialogImageUrl.value = file.url
 }
 defineExpose({
     getAllData,
