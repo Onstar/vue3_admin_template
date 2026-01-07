@@ -130,6 +130,7 @@ const getHasSpu = async (page: number = 1) => {
 }
 function addSpuHandle() {
     scene.value = 1
+    spuForm.value.initAddSpu(categoryStore.c3Id)
 }
 function editSpuHandle(row: SpuData) {
     scene.value = 1
@@ -137,6 +138,7 @@ function editSpuHandle(row: SpuData) {
 }
 function changeSceneHandle(v: number) {
     scene.value = v
+    getHasSpu()
 }
 </script>
 

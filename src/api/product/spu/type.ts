@@ -35,13 +35,14 @@ export interface AllTrademark extends ResponseData {
 
 export interface SpuImage {
     id?: number
-    createTime: string
-    updateTime: string
-    spuId: number
-    imgName: string
-    imgUrl: string
+    createTime?: string
+    updateTime?: string
+    spuId?: number
+    imgName: string | undefined
+    imgUrl: string | undefined
     name?: string
     url?: string
+    response?: { data?: string }
 }
 export interface SpuHasImg extends ResponseData {
     data: SpuImage[]
@@ -51,8 +52,8 @@ export interface SaleAttrValue {
     createTime?: string
     updateTime?: string
     spuId?: number
-    baseSaleAttrId: number
-    saleAttrValueName: string
+    baseSaleAttrId: number | undefined | string
+    saleAttrValueName: string | undefined
     saleAttrName?: string
     isChecked?: boolean
 }
@@ -62,9 +63,11 @@ export interface SaleAttr {
     createTime?: string
     updateTime?: string
     spuId?: number
-    baseSaleAttrId: number
-    saleAttrName: string
+    baseSaleAttrId: number | undefined | string
+    saleAttrName: string | undefined
     spuSaleAttrValueList: spuSaleAttrValueList
+    flag?: boolean
+    saleAttrValue?: string | undefined
 }
 export interface SaleAttrResponseData extends ResponseData {
     data: SaleAttr[]
